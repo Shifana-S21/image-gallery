@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Gallery</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem;
+      background: linear-gradient(135deg, #1e1e2f, #2e2e4f);
+      color: #eee;
+      text-align: center;
+    }h1 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #ffd86b;
+}
+
+.full-img {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+.full-img img {
+  width: 100%;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0%);
+  transition: background-color 0.3s;
+  border-radius: 16px;
+}
+button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  transition: background 0.2s;
+}
+button.light {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+  color: #fff;
+}
+
+.thumb-bar {
+  max-width: 850px;
+  margin: 2rem auto 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.thumb-bar img {
+  width: 130px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #444;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.thumb-bar img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(255, 216, 107, 0.4);
+  border-color: #ffd86b;
+}
+
+  </style>
+</head>
+<body>
+  <h1>🌌 IMAGE GALLERY </h1>  <div class="full-img">
+    <img
+      class="displayed-img"
+      src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d"
+      alt="Eye closeup" />
+    <div class="overlay"></div>
+    <button class="dark">Darken</button>
+  </div>  <div class="thumb-bar"></div>  <script>
+    const displayedImage = document.querySelector('.displayed-img');
+    const thumbBar       = document.querySelector('.thumb-bar');
+    const overlay        = document.querySelector('.overlay');
+    const btn            = document.querySelector('button');
+
+    const imageList = [
+      {
+        src: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d',
+        alt: 'Close-up of a blue human eye'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1519608487953-e999c86e7455',
+        alt: 'Sunset over mountains'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+        alt: 'Forest road in autumn colors'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1506765515384-028b60a970df',
+        alt: 'Waves crashing on rocks'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
+        alt: 'Desert landscape under stars'
+      }
+    ];
+
+    for (const image of imageList) {
+      const newImage = document.createElement('img');
+      newImage.src = image.src;
+      newImage.alt = image.alt;
+      thumbBar.appendChild(newImage);
+
+      newImage.addEventListener('click', () => {
+        displayedImage.style.opacity = '0.5';
+        setTimeout(() => {
+          displayedImage.src = image.src;
+          displayedImage.alt = image.alt;
+          displayedImage.style.opacity = '1';
+        }, 150);
+      });
+    }
+
+    btn.addEventListener('click', () => {
+      const isDark = btn.classList.contains('dark');
+
+      if (isDark) {
+        btn.className = 'light';
+        btn.textContent = 'Lighten';
+        overlay.style.backgroundColor = 'rgb(0 0 0 / 50%)';
+      } else {
+        btn.className = 'dark';
+        btn.textContent = 'Darken';
+        overlay.style.backgroundColor = 'rgb(0 0 0 / 0%)';
+      }
+    });
+  </script></body>
+</html>
